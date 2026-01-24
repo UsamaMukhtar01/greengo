@@ -84,6 +84,32 @@ export const PostProducts = async (req, res) => {
 
 }
 
+// export const postProductsBulk = async (req, res) => {
+//     try {
+//         const products = items;
+
+//         // Validation
+//         if (!Array.isArray(products) || products.length === 0) {
+//             return res.status(400).json({
+//                 message: "Request body must be a non-empty array of products"
+//             });
+//         }
+
+//         const insertedProducts = await Products.insertMany(products, {
+//             ordered: false // continues even if one product fails
+//         });
+
+//         res.status(201).json({
+//             message: `${insertedProducts.length} products inserted successfully`,
+//             products: insertedProducts
+//         });
+
+//     } catch (error) {
+//         console.error(error);
+//         res.status(409).json({ message: error.message });
+//     }
+// };
+
 export const ProductsRecommendations = async (req, res) => {
     try {
         // get 2 different random categories from the database

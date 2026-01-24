@@ -20,7 +20,7 @@ const Checkout = () => {
     const dispatch = useDispatch();
 
     const cart = useSelector(state => state.products.cart_validation);
-
+console.log("cart", cart)
     const handleCheckout = () => {
 
         if (!fname.current.value)
@@ -48,12 +48,11 @@ const Checkout = () => {
         if (!floor.current.value)
             return setError("Enter a floor");
         if (isNaN(floor.current.value))
-            return setError("Enter a valid building number");
+            return setError("Enter a valid floor number");
         if (!apartment_number.current.value)
             return setError("Enter an apartment number");
         if (isNaN(apartment_number.current.value))
-            return setError("Enter a valid building number");
-
+            return setError("Enter a valid apartment number");
 
         const onSuccess = (url) => {
             window.location.href = url;
@@ -73,7 +72,7 @@ const Checkout = () => {
             email: email.current.value,
             phone_number: phone.current.value,
             address: {
-                country: 'Egypt',
+                country: 'USA',
                 city: city.current.value,
                 area: area.current.value,
                 street: street.current.value,
@@ -83,15 +82,15 @@ const Checkout = () => {
             }
         };
 
-        dispatch(postOrder(cart.token, data, onSuccess, onError));
+        dispatch(postOrder(cart, data, onSuccess, onError));
 
     }
     const validatePhone = (phone) => {
         return String(phone)
             .toLowerCase()
-            .match(
-                /^01[0-2,5]{1}[0-9]{8}$/
-            );
+            // .match(
+            //     /^01[0125][0-9]{8}$/
+            // );
     };
 
     const validateEmail = (email) => {
@@ -127,7 +126,7 @@ const Checkout = () => {
 
             <div className={styles['total']}>
                 <div className={styles["total-text"]}>Total Price:</div>
-                <div className={styles['total-amount']}>{cart.total} EGP</div>
+                <div className={styles['total-amount']}>{cart.total} USD</div>
             </div>
 
             <div className={styles['total-wrapper']}>

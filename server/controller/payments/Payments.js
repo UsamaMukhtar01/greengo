@@ -1,25 +1,23 @@
-import {stripe} from "../../index.js";
+import { stripe } from "../../index.js";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import generateId from "../../utils/generateId.js";
-import {ORDERS_BASEURL, WEBSITE_BASE_URL} from "../../services/BaseURLs.js";
+import { ORDERS_BASEURL, WEBSITE_BASE_URL } from "../../services/BaseURLs.js";
 
 export const createCheckoutSession = async (req, res) => {
     try {
-        const {products, total} = jwt.verify(
-            req.body.token,
-            process.env.JWT_SECRET_KEY
-        );
-        const {data} = req.body;
+        const { products, total, data } = req.body;
+        if (!products.cart || !Array.isArray(products.cart) || products.cart.length === 0) {
+            return res.status(400).json({ message: "Products are required" });
+        }
         const order_id = generateId();
-
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             mode: "payment",
-            line_items: products.map((product) => {
+            line_items: products.cart?.map((product) => {
                 return {
                     price_data: {
-                        currency: "egp",
+                        currency: "usd",
                         product_data: {
                             name: product.name,
                         },
@@ -31,6 +29,7 @@ export const createCheckoutSession = async (req, res) => {
             payment_intent_data: {
                 metadata: {
                     order_id: order_id,
+                    user_id: req.user.id,
                     firstName: data.name.first,
                     lastName: data.name.last,
                     email: data.email,
@@ -45,7 +44,7 @@ export const createCheckoutSession = async (req, res) => {
                         apartment_number: data.address.apartment_number,
                     }),
                     products: JSON.stringify(
-                        products.map((product) => {
+                        products.cart?.map((product) => {
                             return {
                                 product_id: product.product_id,
                                 name: product.name,
@@ -53,28 +52,28 @@ export const createCheckoutSession = async (req, res) => {
                             };
                         })
                     ),
-                    total: total,
+                    total: products.total,
                 },
             },
             success_url: `${WEBSITE_BASE_URL}/checkout/success?order=${order_id}`,
             cancel_url: `${WEBSITE_BASE_URL}/cart`,
         });
 
-        res.status(201).json({url: session.url});
+        res.status(201).json({ url: session.url });
     } catch (error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });
     }
 };
 
 export const webhook = async (req, res) => {
     const eventType = req.body.type;
-    const {metadata} = req.body.data.object;
+    const { metadata } = req.body.data.object;
     try {
         if (eventType === "charge.succeeded") {
-            await axios.post(ORDERS_BASEURL, {data: metadata});
+            await axios.post(ORDERS_BASEURL, { data: metadata });
         }
         res.status(200).json(metadata);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(404).json({ message: error.message });
     }
 };

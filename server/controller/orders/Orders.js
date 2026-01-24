@@ -67,9 +67,7 @@ export const getOrder = async (req, res) => {
 
 export const getAllOrders = async (req, res) => {
     try {
-
-        const id = req.body.id;
-
+        const id = req.user.id;
         // verify the user's role by calling the `User` service
         try {
             await axios.post(`${USER_BASEURL}/role`, {id, role: 'ADMIN'})
@@ -93,7 +91,7 @@ export const updateOrder = async (req, res) => {
     try {
 
         const orderStatus = req.body.status;
-        const id = req.body.id;
+        const id = req.user.id;
 
         // verify the user's role by calling the `User` service
         try {

@@ -1,6 +1,16 @@
 import * as api from "../api";
 import {LOGIN, LOGOUT, UPDATE_WISHLIST} from "../constants/actions/authentication";
 
+export const authSignup = (data, onSuccess, onError) => async (dispatch) => {
+    try {
+        const signupData = await api.authSignup(data).then(res => res.data);
+        dispatch({ type: LOGIN, data: signupData });
+        onSuccess();
+    } catch (e) {
+         console.log("Error:", e.response.data);
+        onError(e.response.data? e.response.data : { message: "Server Error" });
+    }
+};
 export const authLogin = (email, password, onSuccess, onError) => async (dispatch) => {
     try {
         const loginData = await api.authLogin(email, password).then(res => res.data);

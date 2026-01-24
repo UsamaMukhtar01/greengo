@@ -3,7 +3,7 @@ import axios from "axios";
 import {PRODUCTS_BASEURL} from "../../services/BaseURLs.js";
 
 export const getWishlist = async (req, res) => {
-    const {id} = req.body;
+    const id = req.user.id;
 
     try {
         // get user's wishlist array
@@ -20,7 +20,8 @@ export const getWishlist = async (req, res) => {
 }
 
 export const updateWishlist = async (req, res) => {
-    const {id, product_id} = req.body;
+    const {product_id} = req.body;
+    const id = req.user.id;
     try {
         const user = await Users.findById(id);
 

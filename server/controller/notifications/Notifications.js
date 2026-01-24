@@ -3,14 +3,13 @@ import OrderConfirmationTemplate from "./templates/OrderConfirmationTemplate.js"
 
 const defaults = {
     from: {
-        name: 'Rabbit Mart',
-        email: 'hey.baraa@gmail.com',
+        name: 'GreenGo',
+        email: 'usamamukhtar.work@gmail.com',
     }
 }
 
 export const orderConfirmation = async (req, res) => {
-    const {to, order} = req.body;
-    
+    const {to, order} = req.body;    
     const email = {
         ...defaults,
         to,
@@ -25,8 +24,10 @@ export const orderConfirmation = async (req, res) => {
 const sendEmail = async (email, res) => {
     try {
         await sgMail.send(email);
+        console.log(`Email sent to ${email.to}`);
         res.status(200).json({email, result: 'Sent Successfully'});
     } catch (e) {
+        console.error(e);
         res.status(400).json({message: e.message});
     }
 }

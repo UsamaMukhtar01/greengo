@@ -1,5 +1,5 @@
 import styles from './footer.module.css';
-import Logo from '../../shared/assets/logo.png';
+import Logo from '../../shared/assets/logo1.png';
 import {Link} from "react-router-dom";
 
 const Footer = () => {
@@ -7,7 +7,7 @@ const Footer = () => {
         <div className={styles['wrapper']}>
             <div className={styles['top-wrapper']}>
                 <div className={styles['logo-wrapper']}>
-                    <img src={Logo} alt={'Rabbit Mart'}/>
+                    <img src={Logo} alt={'GreenGo'}/>
                 </div>
                 <div className={styles['pages-wrapper']}>
                     <div className={styles['pages']}>

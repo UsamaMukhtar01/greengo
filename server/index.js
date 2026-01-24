@@ -18,8 +18,10 @@ dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_KEY);
 export const stripe = Stripe(process.env.STRIPE_PRIVATE_KEY);
 
-app.use(bodyParser.json({extended: true}));
-app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.json({extended: true}));
+// app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/orders', orders);
@@ -48,5 +50,7 @@ const handleServerStartup = () => {
 }
 
 mongoose.connect(process.env.CONNECTION_URL, mongooseOptions, handleServerStartup)
-
+const db = mongoose.connection;
+db.on('error', (error) => console.error('MongoDB connection error:', error));
+db.once('open', () => console.log('Connected to MongoDB database.'));
 export default app

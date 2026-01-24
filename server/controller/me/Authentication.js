@@ -1,6 +1,48 @@
 import Users from "../../model/Users.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import { validationResult } from "express-validator";
+
+export const signup = async (req, res) => {
+  try {
+    // Validate request
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { first_name, last_name, email, password, phone } = req.body;
+
+    // Check if user already exists
+    const existingUser = await Users.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ message: "Email already registered" });
+    }
+
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create user
+    const user = new Users({
+      first_name,
+      last_name,
+      email,
+      password: hashedPassword,
+      phone,
+    });
+
+    await user.save();
+
+    res.status(201).json({
+      message: "User registered successfully",
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 export const login = async (req, res) => {
     const {email, password} = req.body;
@@ -43,7 +85,7 @@ export const login = async (req, res) => {
 }
 
 export const verifyUser = async (req, res) => {
-    const {id} = req.body;
+    const {id} = req.user;
     try {
         const user = await Users.findById(id, {password: 0})
         return res.status(200).json({...user?._doc});
@@ -55,9 +97,7 @@ export const verifyUser = async (req, res) => {
 export const verifyRole = async (req, res) => {
     try {
         const {id, role} = req.body;
-
         const user = await Users.findById(id, {password: 0});
-
         if (!user)
             return res.status(404).json({message: `User ${id} was not found`});
 

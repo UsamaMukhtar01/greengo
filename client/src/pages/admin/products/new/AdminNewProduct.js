@@ -15,7 +15,8 @@ const INITIAL_PRODUCT = {
     weight: '',
     measurement: '',
     category: '',
-    image: ''
+    image: '',
+    stock: 0
 };
 
 const AdminNewProduct = () => {
@@ -58,6 +59,9 @@ const AdminNewProduct = () => {
 
         if (!product.measurement)
             return setError('Enter a valid product measurement');
+
+        if (!product.stock && product.stock < 0)
+            return setError('Enter a valid product stock');
 
         if (!product.category || product.category === 'Category')
             return setError('Enter a valid product category');
@@ -109,6 +113,8 @@ const AdminNewProduct = () => {
                 <input placeholder={'Weight'} type={'number'} name={'weight'} value={product.weight}
                        onChange={(e) => handleChange(e)}/>
                 <input placeholder={'Measurement'} maxLength={3} name={'measurement'} value={product.measurement}
+                       onChange={(e) => handleChange(e)}/>
+                <input placeholder={'Stock'} type={'number'} name={'stock'} value={product.stock}
                        onChange={(e) => handleChange(e)}/>
                 <select defaultValue={'Category'} className={styles['full']} name={'category'}
                         onChange={(e) => handleChange(e)}>

@@ -1,5 +1,5 @@
 import styles from './navigation.module.css';
-import Logo from '../../shared/assets/logo.png';
+import Logo1 from '../../shared/assets/logo1.png';
 import {Link} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {SEARCH_HIDDEN, SEARCH_VISIBLE} from "./constants/search";
@@ -73,7 +73,7 @@ const Navigation = ({cartCount}) => {
         <div className={styles['wrapper']}>
             {search === SEARCH_VISIBLE && <div onClick={(e) => handleClose(e)} className={styles['hide-search']}/>}
             <Link to={'/'} className={styles['logo']}>
-                <img src={Logo} alt={'Rabbit'}/>
+                <img src={Logo1} alt={'GreenGo.'}/>
             </Link>
             <div className={`${styles['nav-wrapper']} ${menuActive && styles['show-menu']}`}>
                 <div onClick={closeMenu} className={`${styles['close-menu']}`}><span

@@ -27,7 +27,8 @@ export const getShipmentId = async (req, res) => {
 
 export const updateShipments = async (req, res) => {
     try {
-        const {status, id} = req.body;
+        const {status} = req.body;
+        const id = req.user.id;
 
         // verify the user's role by calling the `User` service
         try {
@@ -73,8 +74,7 @@ export const postShipments = async (req, res) => {
 
 export const getShipments = async (req, res) => {
     try {
-        const id = req.body.id;
-
+        const id = req.user.id;
         // verify the user's role by calling the `User` service
         try {
             await axios.post(`${USER_BASEURL}/role`, {id, role: 'ADMIN'})

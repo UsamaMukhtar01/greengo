@@ -8,7 +8,7 @@ const PrivateRoute = ({component, role}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [auth, setAuth] = useState(false);
-
+console.log(role);
     useEffect(() => {
 
         const onError = () => {

@@ -107,8 +107,12 @@ const create = (order) => `
 
 <div class="wrapper">
     <div class="header">
-        <img src="https://www.rabbitmart.com/wp-content/uploads/elementor/thumbs/Asset-10-pbt0jiavo8y3y0m7qnt9e3yd60kthgffsxacekimmw.png"
-             alt="Rabbit Mart"/>
+        <div>
+            <img src="https://res.cloudinary.com/dj2jtk9ja/image/upload/c_pad,w_50/v1769282825/logo_f7rvbh.png"
+                alt="Rabbit Mart"/>
+            <img src="https://res.cloudinary.com/dj2jtk9ja/image/upload/c_pad,w_100/v1769280737/logo2_hgkuss.png"
+                alt="Rabbit Mart"/>
+        </div>
         <p>Order Confirmation</p>
     </div>
     <div class="body">
@@ -121,18 +125,18 @@ const create = (order) => `
             <p class="title">Phone Number</p>
             <p class="value">${order.phone_number}</p>
             <p class="title">Address</p>
-            <p class="value">${order.address}</p>
+            <p class="value">${order.address.area + " " + order.address.street + " Building #" + order.address.building_number + " Apartment #" + order.address.apartment_number + ", " + order.address.city + ", " + order.address.country}</p>
         </div>
         <h1>Order Summary</h1>
         <div class="sum">
-            <p>Order Tracking Id: <span class="val">#HELLO1</span></p>
+            <p>Order Tracking Id: <span class="val">${order.order_id}</span></p>
             <p>Items Purchased: <span class="val">${order.products.length} Items</span></p>
             <p>Expected Arrival: <span class="val">${order.ordered_at}</span></p>
             <p>Grand Total: <span class="val">${order.total} EGP</span></p>
         </div>
         <div class="buttons">
-            <a class="order" href="http://localhost:3000/orders/${order.order_id}">View Order</a>
-            <a href="http://localhost:3000/shipping/${order.order_id}">Track Shipping</a>
+            <a class="order" href="https://fb9mfhvk-3000.asse.devtunnels.ms/orders/${order.order_id}">View Order</a>
+            <a href="https://fb9mfhvk-3000.asse.devtunnels.ms/shipping/${order.order_id}">Track Shipping</a>
         </div>
     </div>
 </div>
