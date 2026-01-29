@@ -38,13 +38,23 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
       
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_284FFA11B3724A7B8F28AE6D949F0FB6 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FC39A685BC69492BA3B1CFDF976714E8 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A08601E123C8414CB58AE1FADCE6D534 }}
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
@@ -52,4 +62,4 @@ jobs:
           app-name: 'greengo-mart'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CAB8256EF06340EF87276651F4FF1F04 }}
+          
