@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7075a908.css",
+    "main.js": "/static/js/main.130bba19.js",
+    "static/media/meat_poultry_seafood.png": "/static/media/meat_poultry_seafood.38db80ea11feff6d17f5.png",
+    "static/media/breakfast.png": "/static/media/breakfast.f4bcc1ecc57b87b4b81c.png",
+    "static/media/all.png": "/static/media/all.48e1d4e394c434b9d365.png",
+    "static/media/cold.png": "/static/media/cold.10da14edf5d7c8d6ca0b.png",
+    "static/media/fruits_vegetables.png": "/static/media/fruits_vegetables.c5b0305bb1a2475bad61.png",
+    "static/media/logo1.png": "/static/media/logo1.3a8d48903a75b20d03e6.png",
+    "static/media/hero-background.png": "/static/media/hero-background.240886e6a6211df81a63.png",
+    "static/media/chocolate_candy.png": "/static/media/chocolate_candy.9b6543e1f54321cf85fd.png",
+    "static/media/icecream.png": "/static/media/icecream.a397b441c5d2002dafac.png",
+    "static/media/delivery.png": "/static/media/delivery.16892d23912d51cf8e30.png",
+    "static/media/background.png": "/static/media/background.f91c4f2c65078ba6b6ba.png",
+    "static/media/snacks.png": "/static/media/snacks.dc79fb6faf59f928bd08.png",
+    "static/media/dairy_eggs.png": "/static/media/dairy_eggs.99a9ccec893ef3b798f1.png",
+    "static/media/warning.png": "/static/media/warning.7400d7f2347ac315c9e2.png",
+    "static/media/success.png": "/static/media/success.f36adc5110b37036b546.png",
+    "static/media/order.png": "/static/media/order.65b57dc4187c083210d8.png",
+    "index.html": "/index.html",
+    "main.7075a908.css.map": "/static/css/main.7075a908.css.map",
+    "main.130bba19.js.map": "/static/js/main.130bba19.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7075a908.css",
+    "static/js/main.130bba19.js"
+  ]
+}

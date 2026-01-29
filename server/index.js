@@ -11,6 +11,7 @@ import notifications from "./routes/notifications.js";
 import sgMail from '@sendgrid/mail';
 import me from "./routes/me.js";
 import Stripe from "stripe";
+import path from "path";
 
 const app = express();
 dotenv.config();
@@ -18,8 +19,6 @@ dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_KEY);
 export const stripe = Stripe(process.env.STRIPE_PRIVATE_KEY);
 
-// app.use(bodyParser.json({extended: true}));
-// app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -45,10 +44,24 @@ const mongooseOptions = {
     useUnifiedTopology: true
 }
 
+// Serve React frontend
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+// Handle React routing, send index.html for any unknown route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
+// app.get(/^(?!\/orders|\/products|\/payments|\/shipping|\/notifications|\/me).*$/, (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/build/index.html"));
+// });
+
+
 const handleServerStartup = () => {
     app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
 }
-
+console.log("process.env.CONNECTION_URL", process.env.CONNECTION_URL)
 mongoose.connect(process.env.CONNECTION_URL, mongooseOptions, handleServerStartup)
 const db = mongoose.connection;
 db.on('error', (error) => console.error('MongoDB connection error:', error));
